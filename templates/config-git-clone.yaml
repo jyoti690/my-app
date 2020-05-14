@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "airflow.fullname" . }}-git-clone
+  labels:
+    app: {{ template "airflow.name" . }}
+    chart: {{ template "airflow.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook": "post-install"
+    
+data:
+  git-clone.sh: |
+    #!/bin/sh -e
+    echo Git clone functionality removed from stable chart.
