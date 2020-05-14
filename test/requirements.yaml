@@ -1,0 +1,13 @@
+dependencies:
+# - name: postgresql
+#   version: 0.13.1
+#   repository: https://artifactory.cluster.foxsports-gitops-prod.com.au/artifactory/helm/
+#   condition: postgresql.enabled
+# - name: redis
+#   version: 7.0.0
+#   repository: https://artifactory.cluster.foxsports-gitops-prod.com.au/artifactory/helm/
+#   condition: redis.enabled
+- name: airflow
+  version: 4.1.2
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: airflow.enabled
