@@ -24,9 +24,7 @@ airflow:
       # Required for user creation
       AIRFLOW__WEBSERVER__RBAC: True
 
-    image:
-      repository: 053457794187.dkr.ecr.ap-southeast-2.amazonaws.com/fsa-streamotion/streamotion-airflow
-      tag: 0.0.53
+    
     
     connections:
       - createUser: true
