@@ -1,30 +1,31 @@
 airflow:
   enabled: true
   fullnameOverride: airflow
-
+​
   persistence:
-    enabled: true
+    enabled: false
     existingClaim: airflow-pvc
-    storageClass: efs
   
   # Required for extraVolumes
   useTempFolder:
     enabled: false
     #claimName: airflow-tmp-pvc
-
+​
   airflow:
     serviceAccountName: "default"
-
+​
     config:
       TZ: ''
       AIRFLOW__CORE__DEFAULT_TIMEZONE: system
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: False
       AIRFLOW__CORE__LOAD_EXAMPLES: False
-
+​
       # Required for user creation
       AIRFLOW__WEBSERVER__RBAC: True
-
-    
+​
+    image:
+      repository: 053457794187.dkr.ecr.ap-southeast-2.amazonaws.com/fsa-streamotion/streamotion-airflow
+      tag: 0.0.53
     
     connections:
       - createUser: true
@@ -34,15 +35,15 @@ airflow:
         firstname: admin
         lastname: admin
         password: admin
-
+​
     variables: '{}'
-
+​
     pools: '{}'
-
+​
     fernetKey: 46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-
+​
     schedulerDoPickle: false
-
+​
   workers:
     replicas: 2
     resources:
@@ -52,7 +53,7 @@ airflow:
       requests:
         cpu: "125m"
         memory: "512Mi"
-
+​
   scheduler:
     resources:
       limits:
@@ -61,7 +62,7 @@ airflow:
       requests:
         cpu: "500m"
         memory: "1024Mi"
-
+​
   flower:
     resources: 
       limits:
@@ -70,7 +71,7 @@ airflow:
       requests:
         cpu: "100m"
         memory: "128Mi"
-
+​
   web:
     resources:
       limits:
@@ -79,7 +80,7 @@ airflow:
       requests:
         cpu: "500m"
         memory: "1024Mi"
-
+​
   dags:
     path: /usr/local/airflow/dags
     doNotPickle: true
@@ -98,11 +99,13 @@ airflow:
         requests:
           cpu: "250m"
           memory: "256Mi"
-
+​
   postgresql:
     ## Set to false if bringing your own PostgreSQL.
     enabled: true
     postgresUser: airflow
+    persistence:
+      enabled: false
     resources:
       limits:
         cpu: "1000m"
